@@ -1,12 +1,13 @@
-zipName <- "exdata-data-household_power_consumption.zip"
-dataFile <- "household_power_consumption.txt"
 fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+zipFile <- "exdata-data-household_power_consumption.zip"
+dataFile <- "household_power_consumption.txt"
 
-if (!file.exists(zipName))
-    download.file(fileURL, zipName, method="curl")
+
+if (!file.exists(zipFile))
+    download.file(fileURL, zipFile, method="curl")
 
 if (!file.exists(dataFile))
-    unzip(zipName)
+    unzip(zipFile)
 
 df <- read.table("household_power_consumption.txt", header=TRUE, sep=";", na.strings="?")
 df$Date <- as.Date(strptime(df$Date,"%d/%m/%Y"))
