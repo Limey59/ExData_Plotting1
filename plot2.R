@@ -15,7 +15,9 @@ df <- read.table("household_power_consumption.txt", header=TRUE, sep=";", na.str
 df$Date <- as.Date(strptime(df$Date,"%d/%m/%Y"))
 df <- subset(df, Date >= "2007-02-01" & Date <= "2007-02-02")
 df <- mutate(df, DateTime = as.POSIXct(paste(df$Date, df$Time)), .before=1)
+df <- mutate(df, Weekday = weekdays(df$Date))
 
-png("plot1.png")
-with(df, hist(Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)"))
+png("plot2.png")
+with(df, plot(DateTime, Global_active_power, type="l", ylab="Global Active Power (kilowatts)", xlab="", xaxt="n"))
+axis.POSIXct(1, df$DateTime, at=seq.Date(min(df$Date), by="day", length.out=3), format="%a")
 dev.off()
